@@ -146,11 +146,11 @@ function getPotionsEnRupture(inventaire) {
 
 
 // 🧪 TESTS - Décommente pour tester
-console.log("=== EXERCICE 5 ===");
-console.log("Inventaire complet:", inventaire);
-console.log("Potions en stock:", getPotionsEnStock(inventaire));
-console.log("Potions en rupture:", getPotionsEnRupture(inventaire));
-console.log("Inventaire original:", inventaire);
+// console.log("=== EXERCICE 5 ===");
+// console.log("Inventaire complet:", inventaire);
+// console.log("Potions en stock:", getPotionsEnStock(inventaire));
+// console.log("Potions en rupture:", getPotionsEnRupture(inventaire));
+// console.log("Inventaire original:", inventaire);
 
 
 // ============================================
@@ -163,37 +163,56 @@ console.log("Inventaire original:", inventaire);
 // ✍️ TON CODE ICI
 // Crée ta fonction fabriquerPotionAvecIngredients() ci-dessous
 
+function fabriquerPotionAvecIngredients(id, ingredients, prix = 10, stock = 1) {
 
+  const recette = manuel_de_fabrication[id];
+
+  if (!recette) {
+    return new Error("Cette potion n'existe pas dans le manuel !");
+  }
+
+  for (let ingredient_requis of recette.ingredients) {
+    if (!ingredients.includes(ingredient_requis)) {
+      return new Error("Il manque des ingrédients à cette potion");
+    }
+  }
+
+  return {
+    id: id,
+    prix: prix,
+    stock: stock
+  }
+}
 
 
 // 🧪 TESTS - Décommente pour tester
-// console.log("=== EXERCICE 6 ===");
-// // Test avec tous les ingrédients
-// const resultat1 = fabriquerPotionAvecIngredients(
-//   "potion_soin",
-//   ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"],
-//   10,
-//   1
-// );
-// if (resultat1 instanceof Error) {
-//   console.error(resultat1.message);
-// } else {
-//   console.log("✅ Potion créée:", resultat1);
-//   ajouterPotion(inventaire, resultat1);
-// }
-//
-// // Test avec ingrédients manquants
-// const resultat2 = fabriquerPotionAvecIngredients(
-//   "potion_soin",
-//   ["eau_de_source"],
-//   10,
-//   1
-// );
-// if (resultat2 instanceof Error) {
-//   console.error("❌", resultat2.message);
-// } else {
-//   console.log("✅ Potion créée:", resultat2);
-// }
+console.log("=== EXERCICE 6 ===");
+// Test avec tous les ingrédients
+const resultat1 = fabriquerPotionAvecIngredients(
+  "potion_soin",
+  ["eau_de_source", "ecaille_de_dragon", "poudre_de_diamant"],
+  10,
+  1
+);
+if (resultat1 instanceof Error) {
+  console.error(resultat1.message);
+} else {
+  console.log("✅ Potion créée:", resultat1);
+  ajouterPotion(inventaire, resultat1);
+}
+
+// Test avec ingrédients manquants
+const resultat2 = fabriquerPotionAvecIngredients(
+  "potion_soin",
+  ["eau_de_source"],
+  10,
+  1
+);
+if (resultat2 instanceof Error) {
+  console.error("❌", resultat2.message);
+} else {
+  console.log("✅ Potion créée:", resultat2);
+}
 
 
 // ============================================
