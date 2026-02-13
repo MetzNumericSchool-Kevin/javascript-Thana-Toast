@@ -6,6 +6,7 @@
 const boutonVoyageHTML = document.querySelector(".btn-voyage");
 const localisationEpoqueHTML = document.querySelector(".localisation_epoque");
 const listeArtefactHTML = document.querySelector(".liste_artefacts");
+const voyageEnCours = document.querySelector(".voyage_en_cours");
 const formChoixEpoqueHtml = document.querySelector(".form__choix_epoque");
 const formRechercheArtefact = document.querySelector(
   ".form__recherche_artefact",
@@ -88,6 +89,18 @@ let nomEpoqueActuelle;
 // Crée la fonction voyagerTemps(destination, callback)
 // Utilise setTimeout() avec generationNombreAleatoireEntre(1000, 3000)
 
+function voyagerTemps(destination, callback) {
+  console.log("Voyage en cours vers : ", destination)
+  localisationEpoqueHTML.style.display = "none";
+  voyageEnCours.style.display = "block";
+  setTimeout(function() {
+    console.log("Voyage terminé vers : ", destination)
+    voyageEnCours.style.display = "none";
+    localisationEpoqueHTML.style.display = "block";
+  }, generationNombreAleatoireEntre(1000, 3000));
+  callback(destination);
+}
+
 // Fonction appelée quand le formulaire de voyage temporel est envoyé
 function quandEpoqueChoisie(nomEpoque) {
   nomEpoqueActuelle = nomEpoque;
@@ -95,6 +108,7 @@ function quandEpoqueChoisie(nomEpoque) {
 
   // ✍️ TON CODE ICI
   // Utilise voyagerTemps() ici
+  voyagerTemps(nomEpoqueActuelle, afficherDestination);
   // Avant le voyage : cache .localisation_epoque et affiche .voyage_en_cours
   // Après le voyage (callback) : cache le loader et appelle afficherDestination()
 }
