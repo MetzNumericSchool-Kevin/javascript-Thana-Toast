@@ -7,6 +7,7 @@ const boutonVoyageHTML = document.querySelector(".btn-voyage");
 const localisationEpoqueHTML = document.querySelector(".localisation_epoque");
 const listeArtefactHTML = document.querySelector(".liste_artefacts");
 const voyageEnCours = document.querySelector(".voyage_en_cours");
+const rechercheEnCours = document.querySelector(".recherche_en_cours")
 const formChoixEpoqueHtml = document.querySelector(".form__choix_epoque");
 const formRechercheArtefact = document.querySelector(
   ".form__recherche_artefact",
@@ -93,7 +94,7 @@ function voyagerTemps(destination, callback) {
   console.log("Voyage en cours vers : ", destination)
   localisationEpoqueHTML.style.display = "none";
   voyageEnCours.style.display = "block";
-  setTimeout(function() {
+  setTimeout(function () {
     console.log("Voyage terminé vers : ", destination)
     voyageEnCours.style.display = "none";
     localisationEpoqueHTML.style.display = "block";
@@ -123,12 +124,23 @@ function quandEpoqueChoisie(nomEpoque) {
 // Crée la fonction collecterArtefact(nomArtefact, callback)
 // Le callback reçoit true ou false selon le succès
 
+function collecterArtefact(nomArtefact, callback) {
+  rechercheEnCours.style.display = "block";
+  setTimeout(function () {
+    const proba = Math.random() * 100;
+    const success = proba < 50
+    callback({ artefact: nomArtefact, epoque: nomEpoqueActuelle, success });
+    rechercheEnCours.style.display = "none";
+  }, generationNombreAleatoireEntre(1000, 3000));
+}
+
 // Fonction appelée quand le formulaire de recherche d'artefact est envoyé
 function quandRechercheArtefact(artefact) {
   console.log(artefact);
 
   // ✍️ TON CODE ICI
   // Utilise collecterArtefact() ici
+  collecterArtefact(artefact, afficherRechercheArtefact);
   // Avant : affiche .recherche_en_cours
   // Après (callback) : cache le loader et appelle afficherRechercheArtefact()
 }
