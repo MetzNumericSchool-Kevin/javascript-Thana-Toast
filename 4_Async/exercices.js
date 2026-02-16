@@ -98,8 +98,8 @@ function voyagerTemps(destination, callback) {
     console.log("Voyage terminé vers : ", destination)
     voyageEnCours.style.display = "none";
     localisationEpoqueHTML.style.display = "block";
+    callback(destination);
   }, generationNombreAleatoireEntre(1000, 3000));
-  callback(destination);
 }
 
 // Fonction appelée quand le formulaire de voyage temporel est envoyé
@@ -154,6 +154,26 @@ function quandRechercheArtefact(artefact) {
 // ✍️ TON CODE ICI
 // Crée la fonction missionTemporelleComplexe()
 // Exécute la séquence : medievale → épée chevalier → romaine → bouclier romain → épée romaine
+
+function missionTemporelleComplexe() {
+  voyagerTemps("medievale", function(dest) {
+    afficherDestination(dest);
+    collecterArtefact("épée de chevalier", function(resultat) {
+      afficherRechercheArtefact(resultat);
+      voyagerTemps("romaine", function (dest) {
+        afficherDestination(dest);
+        collecterArtefact("bouclier romain", function (resultat) {
+          afficherRechercheArtefact(resultat);
+          collecterArtefact("épée romaine", function(resultat) {
+            afficherRechercheArtefact(resultat);
+          })
+        })
+      })
+    })
+  });
+}
+
+missionTemporelleComplexe();
 
 // ============================================
 // EXERCICE 4 : Je te promets des voyages sans tracas ! 🤝
